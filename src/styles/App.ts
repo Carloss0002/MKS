@@ -57,6 +57,7 @@ export const CardTitle = styled.div`
         background-color: #373737;
         margin:0 9px;
         font: normal 700 0.938rem/0.938rem 'Montserrat', sans-serif;
+        padding: 0 5px 0 5px;
     }
 `
 
