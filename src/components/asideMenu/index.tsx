@@ -1,7 +1,7 @@
 import { Aside, TextTitle, TitleDiv, FooterDiv, CardElement, CartProducts} from "./style";
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { useDispatch, useSelector } from "react-redux";
-import { remove } from '../../store/reducer/Cart'
+import { remove, addQuantity, removeQuantity } from '../../store/reducer/Cart'
 import { ProductsEntity } from '../../model/IProducts'
 
 interface IAside{
@@ -14,10 +14,16 @@ export function AsideComponent({isVisible, setVisible}:IAside) {
     const products:any = useSelector((store:any)=>store.Cart.products)
     const somarProdutos = products.reduce(soma, 0)
     function soma(total:any, item:any){
-        return total + Number(item.product.price)
+        return total + Number(item.product.price * item.quantity)
     }
     function removeItem(id:any){
         return DISPATCH(remove(id))  
+    }
+    function AddQuantity(id:any){
+       DISPATCH(addQuantity(id))
+    }
+    function RemoveQuantity(id:any){
+       DISPATCH(removeQuantity(id))
     }
     return (
         <Aside visible={isVisible}>
@@ -40,9 +46,9 @@ export function AsideComponent({isVisible, setVisible}:IAside) {
                         <div className="areaBtn">
                           <p>QTD:</p>  
                           <div>
-                            <button>+</button>
+                            <button onClick={()=>AddQuantity(itens.product.id)}>+</button>
                             <span>{itens.quantity}</span>
-                            <button>-</button>
+                            <button onClick={()=>RemoveQuantity(itens.product.id)}>-</button>
                           </div>  
                         </div>
                         <p id="price">R$ {itens.product.price}</p>   
